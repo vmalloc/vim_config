@@ -1,0 +1,109 @@
+[core]
+    pager = less -FRSX
+    whitespace = trailing-space,space-before-tab,indent-with-non-tab,cr-at-eol
+
+[github]
+    user = grzn
+    token = 875cfebd73b3a61338801fd76efd122
+
+[apply]
+    whitespace = nowarn
+
+[rerere]
+    enabled = true
+    autoupdate = true
+
+[branch]
+    autosetupmerge = true
+    autosetuprebase = always
+
+[diff]
+    renames = true
+
+[rebase]
+    stat = true
+
+[merge]
+    log = true
+
+[color]
+    diff = auto
+    status = auto
+    branch = auto
+    interactive = auto
+    ui = true
+    pager = true
+
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
+
+[alias]
+    co = checkout
+    st = status
+    ci = commit
+    br = branch
+    sb = show-branch
+    cp = cherry-pick
+    staged = diff --cached
+    rb = rebase
+    rbc = rebase --continue
+    rbi = rebase --interactive
+    rbs = rebase --skip
+    rl = reflog
+    rs = remote show
+    rt = remote
+    ru = remote update
+    rp = remote prune
+    sm = submodule
+
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+
+    wip = !"git add -A; git ls-files --deleted -z | xargs -0 git rm; git commit -m \"wip\""
+    unwip = !"git log -n 1 | grep -q -c wip && git reset HEAD~1"
+    rb = !"git wip;git rebase -i origin/master;git unwip"
+    pr = !"git fetch;git wip;git rebase --stat origin;git unwip;git heads"
+    head = !"git log -n1"
+    lost = !"git fsck | awk '/dangling commit/ {print $3}' | git show --format='SHA1: %C(yellow)%h%Creset %f' --stdin | awk '/SHA1/ {sub(\"SHA1: \", \"\"); print}'"
+    heads = !"git log --format='%Cred%h%Creset;%C(yellow)%an%Creset;%H;%Cblue%f%Creset' | git name-rev --stdin --always --name-only | column -t -s';'"
+    detach = !git checkout $(git rev-parse HEAD)
+
+    rclone = clone --recursive /git/cache.git/
+    last  = cat-file commit HEAD
+
+    top = !eval cd "$(pwd)/$(git rev-parse --show-cdup)" && pwd
+
+    push-head = !git push origin `git symbolic-ref HEAD`
+    publish = push publish
+    pushall = !git remote | xargs -n1 git push
+    pushalltags = !git remote | xargs -n1 git push --tags
+
+    findnext = rev-list --reverse -n1 HEAD..master
+    checkoutnext = !git checkout `git findnext`
+
+    file-blame = !git ls-files | xargs -n1 -i{} git log -1 --pretty=format:\"%ci {}\" -- {}
+
+    amend = commit --amend -C HEAD
+    stage = add --update
+    staged = diff --cached
+    track = add --intent-to-add
+    unstage = reset HEAD --
+    untrack = rm --cached --
+    who = shortlog -s --
+
+[color]
+    pager = true
+    ui = auto
+
