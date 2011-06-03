@@ -54,7 +54,7 @@ function DragLineDown()
     exe "norm dd"
     exe "norm p"
 endfunction
-nmap <silent> <C-Down> <Esc>:call DragLineDown()<CR>
+map <C-Down> :call DragLineDown()<CR>
 
 function DragLineUp()
     if line(".") == line("$")
@@ -67,7 +67,7 @@ function DragLineUp()
     endif
     
 endfunction
-nmap <silent> <C-Up> <Esc>:call DragLineUp()<CR>
+map <C-Up> :call DragLineUp()<CR>
 
 
 " This is an alternative that also works in block mode, but the deleted
