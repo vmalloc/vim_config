@@ -50,6 +50,26 @@ set showcmd		" display incomplete commands
 " Don't use Ex mode, use Q for formatting
 map Q gq
 
+function DragLineDown()
+    exe "norm dd"
+    exe "norm p"
+endfunction
+nmap <silent> <C-Down> <Esc>:call DragLineDown()<CR>
+
+function DragLineUp()
+    if line(".") == line("$")
+       exe "norm dd"
+       exe "norm P"
+    else
+       exe "norm dd"
+       exe "norm k"
+       exe "norm P"
+    endif
+    
+endfunction
+nmap <silent> <C-Up> <Esc>:call DragLineUp()<CR>
+
+
 " This is an alternative that also works in block mode, but the deleted
 " text is lost and it only works for putting the current register.
 "vnoremap p "_dp
